@@ -11,6 +11,17 @@ module.exports = {
     filename: "main.js",
   } /* Por defecto el punto de salida es dist, pero lo podemos cambiar */,
   resolve: {
-    extensions: [".js"], /* Especificamos las extensiones de archivo con los que vamos a trabajar */
-  }, 
+    extensions: [
+      ".js",
+    ] /* Especificamos las extensiones de archivo con los que vamos a trabajar */,
+  },
+  module: [ /* Modulos son como extensiones */
+    {
+      test: /\.m?js$/,
+      exclude: /node_modules/,
+      use: {
+        loader: "babel-loader"
+      }
+    },
+  ],
 };
