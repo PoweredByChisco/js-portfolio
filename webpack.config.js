@@ -1,5 +1,6 @@
 const path = require("path"); /* path ya esta disponible en node */
 const HtmlWebpackPlugin = require("html-webpack-plugin"); /* Requerimos un comando */
+const MiniCssExtractPlugin = require("mini-css-extract-plugin"); /* Para css */
 
 module.exports = {
   entry:
@@ -26,6 +27,10 @@ module.exports = {
           loader: "babel-loader",
         },
       },
+      {
+        /* Correspondiente a CSS */ test: /\.css$/i,
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
+      },
     ],
   },
 
@@ -35,5 +40,6 @@ module.exports = {
       template: "./public/index.html",
       filename: "./index.html",
     }) /* Con esto generaremos un archivo HTML con un punto de entrada (template) en el dist */,
+    new MiniCssExtractPlugin(),
   ],
 };
