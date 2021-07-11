@@ -28,8 +28,8 @@ module.exports = {
         },
       },
       {
-        /* Correspondiente a CSS */ test: /\.css$/i,
-        use: [MiniCssExtractPlugin.loader, "css-loader"],
+        /* Correspondiente a CSS */ test: /\.css|.styl$/i,
+        use: [MiniCssExtractPlugin.loader, "css-loader", "stylus-loader"],
       },
     ],
   },
