@@ -1,6 +1,8 @@
 const path = require("path"); /* path ya esta disponible en node */
 const HtmlWebpackPlugin = require("html-webpack-plugin"); /* Requerimos un comando */
 const MiniCssExtractPlugin = require("mini-css-extract-plugin"); /* Para css */
+const CopyPlugin = require("copy-webpack-plugin"); /* Para el plugin que copia y pega nuestros recursos de media */
+
 
 module.exports = {
   entry:
@@ -31,6 +33,7 @@ module.exports = {
         /* Correspondiente a CSS */ test: /\.css|.styl$/i,
         use: [MiniCssExtractPlugin.loader, "css-loader", "stylus-loader"],
       },
+      { test: /\.png/, type: "asset/resource" }, /* Para poder importar nuestras imagenes */
     ],
   },
 
@@ -41,5 +44,17 @@ module.exports = {
       filename: "./index.html",
     }) /* Con esto generaremos un archivo HTML con un punto de entrada (template) en el dist */,
     new MiniCssExtractPlugin(),
+    new CopyPlugin({
+      patterns: [
+        {
+          from: path.resolve(
+            __dirname,
+            "src",
+            "assets/images"
+          ) /* Obtiene la dirreccion de nuestras imagenes */,
+          to: "assets/images" /* Indica a donde se van a copuar nuestros archivos en nuestro dist */,
+        },
+      ],
+    }),
   ],
 };
