@@ -2,8 +2,6 @@ const path = require("path"); /* path ya esta disponible en node */
 const HtmlWebpackPlugin = require("html-webpack-plugin"); /* Requerimos un comando */
 const MiniCssExtractPlugin = require("mini-css-extract-plugin"); /* Para css */
 const CopyPlugin = require("copy-webpack-plugin"); /* Para el plugin que copia y pega nuestros recursos de media */
-const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
-const TerserPlugin = require("terser-webpack-plugin") /* Estos ultimos dos, para la minifiacion de nuestro proyecto */
 const Dotenv = require("dotenv-webpack") /* Para las variables de entorno */
 
 
@@ -18,7 +16,8 @@ module.exports = {
     ) /* Usamos resolve para obtener automaticamente la direccion de nuestro directorio donde estamos trabajando */,
     filename: "[name].[contenthash].js",
     assetModuleFilename: "assets/images/[hash][ext][query]"
-  } /* Por defecto el punto de salida es dist, pero lo podemos cambiar */,
+  }, /* Por defecto el punto de salida es dist, pero lo podemos cambiar */
+  mode: "development",
   resolve: {
     extensions: [
       ".js",
@@ -86,11 +85,4 @@ module.exports = {
     }),
     new Dotenv() /* Asi añadimos las variables de entorno */
   ],
-  optimization: { /* Para la minimizacion */
-    minimize: true,
-    minimizer : [
-      new CssMinimizerPlugin(),
-      new TerserPlugin(),
-    ]
-  }
 };
