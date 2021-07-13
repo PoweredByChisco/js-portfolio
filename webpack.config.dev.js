@@ -18,6 +18,7 @@ module.exports = {
     assetModuleFilename: "assets/images/[hash][ext][query]"
   }, /* Por defecto el punto de salida es dist, pero lo podemos cambiar */
   mode: "development",
+  watch: true,
   resolve: {
     extensions: [
       ".js",

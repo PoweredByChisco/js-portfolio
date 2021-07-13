@@ -5,6 +5,7 @@ const CopyPlugin = require("copy-webpack-plugin"); /* Para el plugin que copia y
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin") /* Estos ultimos dos, para la minifiacion de nuestro proyecto */
 const Dotenv = require("dotenv-webpack") /* Para las variables de entorno */
+const { CleanWebpackPlugin} = require("clean-webpack-plugin")
 
 
 
@@ -84,7 +85,8 @@ module.exports = {
         },
       ],
     }),
-    new Dotenv() /* Asi añadimos las variables de entorno */
+    new Dotenv(), /* Asi añadimos las variables de entorno */
+    new CleanWebpackPlugin(), /* Para el plugin que limpiara nuestro build */
   ],
   optimization: { /* Para la minimizacion */
     minimize: true,
