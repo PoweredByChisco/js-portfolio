@@ -18,7 +18,7 @@ module.exports = {
     assetModuleFilename: "assets/images/[hash][ext][query]"
   }, /* Por defecto el punto de salida es dist, pero lo podemos cambiar */
   mode: "development",
-  watch: true,
+  watch: false,
   resolve: {
     extensions: [
       ".js",
@@ -86,4 +86,10 @@ module.exports = {
     }),
     new Dotenv() /* Asi añadimos las variables de entorno */
   ],
+  devServer: { /* Para nuestro servidor local, no es un plugin */
+    contentBase: path.join(__dirname, "dist"),
+    compress: true,
+    historyApiFallback: true,
+    port: 3006,
+  }
 };
