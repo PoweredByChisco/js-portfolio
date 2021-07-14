@@ -3,11 +3,9 @@ const HtmlWebpackPlugin = require("html-webpack-plugin"); /* Requerimos un coman
 const MiniCssExtractPlugin = require("mini-css-extract-plugin"); /* Para css */
 const CopyPlugin = require("copy-webpack-plugin"); /* Para el plugin que copia y pega nuestros recursos de media */
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
-const TerserPlugin = require("terser-webpack-plugin") /* Estos ultimos dos, para la minifiacion de nuestro proyecto */
-const Dotenv = require("dotenv-webpack") /* Para las variables de entorno */
-const { CleanWebpackPlugin} = require("clean-webpack-plugin")
-
-
+const TerserPlugin = require("terser-webpack-plugin"); /* Estos ultimos dos, para la minifiacion de nuestro proyecto */
+const Dotenv = require("dotenv-webpack"); /* Para las variables de entorno */
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = {
   entry:
@@ -18,21 +16,22 @@ module.exports = {
       "dist"
     ) /* Usamos resolve para obtener automaticamente la direccion de nuestro directorio donde estamos trabajando */,
     filename: "[name].[contenthash].js",
-    assetModuleFilename: "assets/images/[hash][ext][query]"
+    assetModuleFilename: "assets/images/[hash][ext][query]",
   } /* Por defecto el punto de salida es dist, pero lo podemos cambiar */,
   resolve: {
     extensions: [
       ".js",
-    ], /* Especificamos las extensiones de archivo con los que vamos a trabajar */
+    ] /* Especificamos las extensiones de archivo con los que vamos a trabajar */,
     alias: {
       "@utils": path.resolve(__dirname, "src/utils"),
       "@templates": path.resolve(__dirname, "src/templates"),
       "@styles": path.resolve(__dirname, "src/styles"),
       "@images": path.resolve(__dirname, "src/assets/images"),
-    }
+    },
   },
 
-  module: { /* Modulos son como extensiones */
+  module: {
+    /* Modulos son como extensiones */
     rules: [
       /* En las reglas decimos que va a leer webpack (a traves de expresiones regulares) y que loader usara para el manejo de estos archivos */
       {
@@ -46,14 +45,17 @@ module.exports = {
         /* Correspondiente a CSS */ test: /\.css|.styl$/i,
         use: [MiniCssExtractPlugin.loader, "css-loader", "stylus-loader"],
       },
-      { test: /\.png/, type: "asset/resource" }, /* Para poder importar nuestras imagenes */
-      { /* Para la carga de fuentes */
-        test: /\.(woff|woff2)$/, 
+      {
+        test: /\.png/,
+        type: "asset/resource",
+      } /* Para poder importar nuestras imagenes */,
+      {
+        /* Para la carga de fuentes */ test: /\.(woff|woff2)$/,
         use: {
           loader: "url-loader",
           options: {
-            limit: 10000, 
-            mimetype: "application/font-woff", /* Tipo de dato a utilizar */
+            limit: 10000,
+            mimetype: "application/font-woff" /* Tipo de dato a utilizar */,
             name: "[name].[contenthash].[ext]",
             outputPath: "./assets/fonts/",
             publicPath: "../assets/fonts/",
@@ -71,7 +73,7 @@ module.exports = {
       filename: "./index.html",
     }) /* Con esto generaremos un archivo HTML con un punto de entrada (template) en el dist */,
     new MiniCssExtractPlugin({
-      filename: "assets/[name].[contenthash].css"
+      filename: "assets/[name].[contenthash].css",
     }),
     new CopyPlugin({
       patterns: [
@@ -85,14 +87,11 @@ module.exports = {
         },
       ],
     }),
-    new Dotenv(), /* Asi añadimos las variables de entorno */
-    new CleanWebpackPlugin(), /* Para el plugin que limpiara nuestro build */
+    new Dotenv() /* Asi añadimos las variables de entorno */,
+    new CleanWebpackPlugin() /* Para el plugin que limpiara nuestro build */,
   ],
-  optimization: { /* Para la minimizacion */
-    minimize: true,
-    minimizer : [
-      new CssMinimizerPlugin(),
-      new TerserPlugin(),
-    ]
-  }
+  optimization: {
+    /* Para la minimizacion */ minimize: true,
+    minimizer: [new CssMinimizerPlugin(), new TerserPlugin()],
+  },
 };
